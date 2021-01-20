@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
  * @version: 1.0
  */
 @Configuration
-public class SamyConfig {
+public class ProjectConfig {
 
     //分页插件
     @Bean

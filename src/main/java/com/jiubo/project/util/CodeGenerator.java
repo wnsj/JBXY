@@ -20,7 +20,7 @@ public class CodeGenerator {
         String packageName = "com.jiubo.project";
         boolean serviceNameStartWithI = false;//auth -> UserService, 设置成true: auth -> IUserService
         //把需要自动生成的表 放在这里!!
-        generateByTables(serviceNameStartWithI, packageName, "swd", "boot", "user");
+        generateByTables(serviceNameStartWithI, packageName, "swd", "boot", "class_infor");
         System.out.println("completed...");
     }
 
@@ -38,7 +38,7 @@ public class CodeGenerator {
      * @version: 1.0
      **/
     private static void generateByTables(boolean serviceNameStartWithI, String packageName, String author, String database, String... tableNames) {
-        String filePath = "d:\\codeGen";
+        String filePath = "src/main/java/";
         String dbUrl = "jdbc:mysql://172.16.6.78:3306/jbxy?useSSL=false&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useTimezone=true&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
@@ -55,9 +55,10 @@ public class CodeGenerator {
 //              .setSuperMapperClass("cn.saytime.mapper.BaseMapper")
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
         GlobalConfig config = new GlobalConfig();
+        String projectPath = System.getProperty("user.dir");
         config.setActiveRecord(false)
+                .setOutputDir(projectPath + "/src/main/java")
                 .setAuthor(author)
-                .setOutputDir(filePath)
                 .setFileOverride(true)
                 .setEntityName("%sBean")
                 .setMapperName("%sDao")

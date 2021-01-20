@@ -49,7 +49,7 @@ public class SwaggerConfig {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .pathMapping("/")
-                .groupName("SAMY API")//设置API文档分组名（如：需要多个分组则新建多个Docket）
+                .groupName("九博学院 API")//设置API文档分组名（如：需要多个分组则新建多个Docket）
 //                .enable(flag)//是否启用Swagger2（false：不启用）
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.jiubo.project.action")) //配置要扫描接口的方式
@@ -64,8 +64,8 @@ public class SwaggerConfig {
         Contact contact = new Contact("jiubo", "http://xxx.com", "xxxxx@qq.com");
         //文档基础信息
         ApiInfo apiInfo = new ApiInfo(
-                "SAMY API文档",
-                "SAMY 接口文档",
+                "九博学院 API文档",
+                "九博学院 接口文档",
                 "1.0",
                 "urn:tos",
                 contact,
