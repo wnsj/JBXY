@@ -3,9 +3,8 @@ package com.jiubo.project.dao;
 import com.jiubo.project.bean.ClassInforBean;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -17,5 +16,9 @@ import java.util.Map;
  */
 public interface ClassInforDao extends BaseMapper<ClassInforBean> {
 
-    List<ClassInforBean> courseQueriesByLeavetwo(ClassInforBean classInforBean);
+    List<ClassInforBean> courseQueriesByLeavetwo(String leavetwo,
+                                                 Date startTime,
+                                                 Date endTime,
+                                                 String department,
+                                                 String name);
 }

@@ -3,9 +3,10 @@ package com.jiubo.project.bean;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,10 +37,11 @@ public class ClassInforBean implements Serializable {
     @TableField(value = "`name`")
     private String name;
 
+    @ApiModelProperty(value = "部门")
     private String department;
 
     @ApiModelProperty(value = "培训时间")
-    private LocalDate classTime;
+    private Date classTime;
 
     @ApiModelProperty(value = "课程密码")
     private String classPwd;
@@ -53,6 +55,7 @@ public class ClassInforBean implements Serializable {
     @ApiModelProperty(value = "课程随机验证码")
     private String classRand;
 
+    @ApiModelProperty(value = "课程编号")
     private String leavetwo;
 
     @TableField(value = "`leave`")
@@ -60,6 +63,14 @@ public class ClassInforBean implements Serializable {
 
     @ApiModelProperty(value = "课程时间")
     private Integer classLong;
+
+    @ApiModelProperty(value = "密码校验结果，0密码错误，1 密码正确")
+    @TableField(exist = false)
+    private Integer checkedResult;
+
+    @ApiModelProperty(value = "是否观看完整视频")
+    @TableField(exist = false)
+    private Integer isRead;
 
 
 }
