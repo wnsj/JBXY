@@ -7,6 +7,9 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -225,6 +228,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		Date prevDay = new Date(ms);
 		return prevDay;
 	}
+
+	/**
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static LocalDateTime dateToLocalDateTime(Date date){
+		Instant instant = date.toInstant();
+		ZoneId zoneId = ZoneId.systemDefault();
+		LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+		return localDateTime;
+	}
+
 	public static void main(String[] args) throws ParseException {
 //		System.out.println(formatDate(parseDate("2010/3/6")));
 //		System.out.println(getDate("yyyy年MM月dd日 E"));

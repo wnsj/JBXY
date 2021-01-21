@@ -123,7 +123,7 @@ public class ServiceLogAspect {
         return result;
     }
 
-    @Pointcut(value = "(execution(* com.jiubo.samy.action..*.*(..)))")
+    @Pointcut(value = "(execution(* com.jiubo.project.action..*.*(..)))")
     public void serviceAspect() {
     }
 

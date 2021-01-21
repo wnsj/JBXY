@@ -1,6 +1,8 @@
 package com.jiubo.project.exception;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.liangbaika.validate.annations.ValidateParam;
+import com.github.liangbaika.validate.exception.ParamsInValidException;
 import com.jiubo.project.common.Constant;
 import com.jiubo.project.exception.MessageException;
 import org.slf4j.Logger;
@@ -34,7 +36,7 @@ public class SysControllerAdvice {
     @ExceptionHandler(value = Exception.class)
     public JSONObject exceptionHandler(Exception e) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constant.Result.RETCODE, Constant.Result.ERROR);
+        jsonObject.put(Constant.Result.RETCODE, Constant.Result.ERRORSYS);
         jsonObject.put(Constant.Result.RETMSG, Constant.Result.ERROR_MSG);
         log.error("-------samy---------".concat(Constant.Result.RETMSG), e);
         return jsonObject;
@@ -52,6 +54,15 @@ public class SysControllerAdvice {
     @ResponseBody
     @ExceptionHandler(value = MessageException.class)
     public JSONObject messageExceptionHandler(MessageException e) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(Constant.Result.RETCODE, Constant.Result.ERROR);
+        jsonObject.put(Constant.Result.RETMSG, e.getMessage());
+        return jsonObject;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = ParamsInValidException.class)
+    public JSONObject messageExceptionHandler(ParamsInValidException e) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constant.Result.RETCODE, Constant.Result.ERROR);
         jsonObject.put(Constant.Result.RETMSG, e.getMessage());

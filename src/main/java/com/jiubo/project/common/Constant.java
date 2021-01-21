@@ -11,6 +11,7 @@ public class Constant {
         final public String RETCODE = "retCode";
         final public String RETMSG = "retMsg";
         final public String SUCCESS = "0000";
+        final public String ERRORSYS = "5000";
         final public String ERROR = "9999";
         final public String REPEAT = "1111";
         final public String SUCCESS_MSG = "成功！";

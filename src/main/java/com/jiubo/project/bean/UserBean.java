@@ -35,6 +35,7 @@ public class UserBean implements Serializable {
 
     private String openid;
 
+    @ApiModelProperty(value = "名字")
     private String name;
 
     @ApiModelProperty(value = "部门")
