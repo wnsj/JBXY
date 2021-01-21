@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiubo.project.dao.CourseaskDao">
+
+    <select id="queryCountCourseas" resultType="com.jiubo.project.bean.CourseaskBean">
+        select count(*) countNumber,
+        avg(query_result.zongfen) zongfen,
+        avg(query_result.biaodafen) biaodafen,
+        avg(query_result.)
+        from
+        (select * from courseask c
+        where c.coursetitle = #{coursetitle}
+        and c.courseteacher = #{courseteacher}
+        <if test="deparment != null and deparment != ''">
+            and c.deparment = #{deparment}
+        </if>
+        <if test="deparmentsmall != null and deparmentsmall != ''">
+            and c.deparmentsmall = #{deparmentsmall}
+        </if>
+        ) query_result
+    </select>
+</mapper>

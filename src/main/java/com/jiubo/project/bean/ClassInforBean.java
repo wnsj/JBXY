@@ -68,9 +68,4 @@ public class ClassInforBean implements Serializable {
     @TableField(exist = false)
     private Integer checkedResult;
 
-    @ApiModelProperty(value = "是否观看完整视频")
-    @TableField(exist = false)
-    private Integer isRead;
-
-
 }
