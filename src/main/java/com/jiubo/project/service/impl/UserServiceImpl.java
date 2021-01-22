@@ -20,9 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -53,8 +51,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserBean> implements U
 
 
     @Override
-    public String getCodeUrl() throws UnsupportedEncodingException {
-        redirectUri = "http://shop.bkxinli.com/bkhd/shareTest.html";
+    public Map<String,Object> getCodeUrl() throws UnsupportedEncodingException {
+        Map<String,Object> map = new HashMap<>();
+//        redirectUri = "http://shop.bkxinli.com/bkhd/shareTest.html";
         log.info("urlEncode前的链接:{}",redirectUri);
         String url = URLEncoder.encode(redirectUri,"UTF-8");
         log.info("urlEncode后的链接:{}",url);
@@ -62,19 +61,21 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserBean> implements U
         log.info("uuid:{}",uuid);
         StringBuilder resultUrl = new StringBuilder();
         resultUrl.append("https://open.weixin.qq.com/connect/oauth2/authorize?");
-        resultUrl.append("appid="+appid);
-        resultUrl.append("&redirect_uri="+url+"?sessionid="+uuid);
+        resultUrl.append("appid=").append(appid);
+        resultUrl.append("&redirect_uri=").append(url).append("?sessionid=").append(uuid);
         resultUrl.append("&response_type=code&scope=snsapi_userinfo");
-        resultUrl.append("&state="+uuid);
-        return resultUrl.toString();
+        resultUrl.append("&state=").append(uuid);
+        map.put("url",resultUrl);
+        map.put("sessionId",uuid);
+        return map;
     }
 
     @Override
     public Integer getInfoByCode(String sessionId, String code) throws MessageException {
         StringBuilder builder = new StringBuilder("https://api.weixin.qq.com/sns/oauth2/access_token?");
-        builder.append("appid="+appid);
-        builder.append("&secret="+appSecret);
-        builder.append("&code="+code+"&grant_type=authorization_code");
+        builder.append("appid=").append(appid);
+        builder.append("&secret=").append(appSecret);
+        builder.append("&code=").append(code).append("&grant_type=authorization_code");
         ResponseEntity<String> forEntity = restTemplate.getForEntity(builder.toString(),String.class);
         String body = forEntity.getBody();
         JSONObject jsonObject =JSONObject.parseObject(body);

@@ -6,6 +6,7 @@ import com.jiubo.project.exception.MessageException;
 import io.swagger.models.auth.In;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,7 +18,7 @@ import java.io.UnsupportedEncodingException;
  */
 public interface UserService extends IService<UserBean> {
 
-    String getCodeUrl() throws UnsupportedEncodingException;
+    Map<String,Object> getCodeUrl() throws UnsupportedEncodingException;
 
     Integer getInfoByCode(String sessionId, String code) throws MessageException;
 
