@@ -56,7 +56,7 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
     }
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ClassInforBean checkedVideo(Integer id, String classPwd, String openid) throws MessageException {
+    public Map<String, Object> checkedVideo(Integer id, String classPwd, String openid) throws MessageException {
         if(id == null) throw new MessageException("课程ID不可为空！");
         if (classPwd == null && classPwd.equals("")) throw new MessageException("观看视频密码不可为空！");
         if (openid == null && openid.equals("")) throw new MessageException("用微信登录码不可为空！");
@@ -69,7 +69,7 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         QueryWrapper<PasswordBean> passwordBean= new QueryWrapper<>();
         passwordBean.eq("classid",id).eq("classPwd",classPwd);
         List<PasswordBean> passwordBeans = passwordDao.selectList(passwordBean);
-        if (passwordBeans.size() > 1) throw new MessageException("数据库出现重复数据!");
+        if (passwordBeans.size() > 1) throw new MessageException("数据出现重复数据!");
         PasswordBean password = passwordBeans.get(0);
         //判断视频的观看次数
         if (password.getJudge() >= password.getUpperlimit()) throw new MessageException("该视频已达到最大观看次数！");
@@ -82,7 +82,7 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
 
         QueryWrapper<LectureScheduleBean> lectureScheduleBean = new QueryWrapper<>();
         lectureScheduleBean.eq("user",userBean.getName())
-                .eq("class_name",id)
+                .eq("class_name",String.valueOf(id))
                 .eq("deparment",userBean.getDepartment())
                 .eq("deparsmall",userBean.getDepartsmall());
         List<LectureScheduleBean> lectureScheduleBeans = lectureScheduleDao.selectList(lectureScheduleBean);
@@ -91,10 +91,7 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         Map<String, Object> map = new HashMap<>();
         //判断是否观看过视频
         if (lectureScheduleBeans.size() == 1){
-            Integer isread = lectureScheduleBeans.get(0).getIsread();
             map.put("lectureSchedule",lectureScheduleBeans.get(0));
-            //添加是否观看过完整视频的状态
-            classInforBean.setIsRead(isread);
         } else {
             LectureScheduleBean lectureSchedule = new LectureScheduleBean();
             lectureSchedule.setUser(userBean.getName())
@@ -105,11 +102,12 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
                     .setIsread(0);
             int insert = lectureScheduleDao.insert(lectureSchedule);
             if (insert != 1) throw new MessageException("新增观看记录失败");
-            //添加是否观看过完整视频的状态
-            classInforBean.setIsRead(0);
+            lectureSchedule = lectureScheduleDao.selectOne(lectureScheduleBean);
+            map.put("lectureSchedule",lectureSchedule);
         }
         //设置密码不可见
         classInforBean.setClassPwd("");
-        return classInforBean;
+        map.put("classInforBean",classInforBean);
+        return map;
     }
 }

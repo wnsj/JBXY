@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiubo.project.dao.LeaveDao">
+
+    <select id="directoryListing" resultType="com.jiubo.project.bean.LeaveBean">
+        <if test="id == null and add == '' or add == null and leavetwo == '' or leavetwo == null ">
+            select * from `leave`
+            where leavetwo == null and `add` == null
+        </if>
+        <if test="leavetwo != null and leavetwo != '' and add != null and add != ''">
+            select l1.*
+            from `leave` l1
+            LEFT join  `leave` l2
+            on l1.leavetwo = l2.id
+            where l2.id = #{id}
+        </if>
+    </select>
+</mapper>

@@ -6,6 +6,7 @@ import com.jiubo.project.exception.MessageException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,5 +31,5 @@ public interface ClassInforService extends IService<ClassInforBean> {
                                                         String department,
                                                         String name) throws MessageException;
 
-    ClassInforBean checkedVideo(Integer id, String classPwd, String openid) throws MessageException;
+    Map<String, Object> checkedVideo(Integer id, String classPwd, String openid) throws MessageException;
 }
