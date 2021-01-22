@@ -1,6 +1,8 @@
 package com.jiubo.project.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiubo.project.bean.ClassInforBean;
 import com.jiubo.project.bean.LectureScheduleBean;
 import com.jiubo.project.bean.PasswordBean;
@@ -46,14 +48,20 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
     private LectureScheduleDao lectureScheduleDao;
 
     @Override
-    public List<ClassInforBean> courseQueriesByLeavetwo(String leavetwo,
-                                                        Date startTime,
-                                                        Date endTime,
-                                                        String department,
-                                                        String name) throws MessageException {
+    public PageInfo<ClassInforBean> courseQueriesByLeavetwo(String leavetwo,
+                                                            Date startTime,
+                                                            Date endTime,
+                                                            String department,
+                                                            String name, Integer page, Integer pageSize) throws MessageException {
         if (leavetwo == null && leavetwo.equals("")) throw new MessageException("课程编码不可为空！");
-        return classInforDao.courseQueriesByLeavetwo(leavetwo,startTime,endTime,department,name);
+        page = page == null ? 1:page;
+        pageSize = pageSize == null ? 10:pageSize;
+        PageHelper.startPage(page,pageSize);
+        List<ClassInforBean> list = classInforDao.courseQueriesByLeavetwo(leavetwo,startTime,endTime,department,name);
+        PageInfo<ClassInforBean> result = new PageInfo<>(list);
+        return result;
     }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Map<String, Object> checkedVideo(Integer id, String classPwd, String openid) throws MessageException {
@@ -109,5 +117,10 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         classInforBean.setClassPwd("");
         map.put("classInforBean",classInforBean);
         return map;
+    }
+
+    @Override
+    public String test() {
+        return "哈哈哈哈哈";
     }
 }

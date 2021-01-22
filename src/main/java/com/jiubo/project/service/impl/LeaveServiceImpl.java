@@ -26,7 +26,7 @@ public class LeaveServiceImpl extends ServiceImpl<LeaveDao, LeaveBean> implement
 
     @Override
     public List<LeaveBean> directoryListing(LeaveBean leaveBean) throws MessageException {
-        if (leaveBean.getId() == null) throw new MessageException("目录结构id不可为空！");
+//        if (leaveBean.getId() == null) throw new MessageException("目录结构id不可为空！");
         return leaveDao.directoryListing(leaveBean);
     }
 }

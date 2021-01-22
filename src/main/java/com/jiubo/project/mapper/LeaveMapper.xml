@@ -3,11 +3,11 @@
 <mapper namespace="com.jiubo.project.dao.LeaveDao">
 
     <select id="directoryListing" resultType="com.jiubo.project.bean.LeaveBean">
-        <if test="id == null and add == '' or add == null and leavetwo == '' or leavetwo == null ">
-            select * from `leave`
-            where leavetwo == null and `add` == null
+        <if test="id == null">
+            select * from `leave` l
+            where l.leavetwo is NULL
         </if>
-        <if test="leavetwo != null and leavetwo != '' and add != null and add != ''">
+        <if test="id != null">
             select l1.*
             from `leave` l1
             LEFT join  `leave` l2

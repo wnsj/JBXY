@@ -1,5 +1,6 @@
 package com.jiubo.project.service;
 
+import com.github.pagehelper.PageInfo;
 import com.jiubo.project.bean.ClassInforBean;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jiubo.project.exception.MessageException;
@@ -25,11 +26,14 @@ public interface ClassInforService extends IService<ClassInforBean> {
      * @DATE: 2021/1/20 9:42
      * @DESCRIPTION:课程查询
      */
-    public List<ClassInforBean> courseQueriesByLeavetwo(String leavetwo,
-                                                        Date startTime,
-                                                        Date endTime,
-                                                        String department,
-                                                        String name) throws MessageException;
+    public PageInfo<ClassInforBean> courseQueriesByLeavetwo(String leavetwo,
+                                                            Date startTime,
+                                                            Date endTime,
+                                                            String department,
+                                                            String name, Integer page, Integer pageSize) throws MessageException;
 
     Map<String, Object> checkedVideo(Integer id, String classPwd, String openid) throws MessageException;
+
+
+    String test();
 }

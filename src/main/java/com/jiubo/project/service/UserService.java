@@ -20,7 +20,7 @@ public interface UserService extends IService<UserBean> {
 
     Map<String,Object> getCodeUrl() throws UnsupportedEncodingException;
 
-    Integer getInfoByCode(String sessionId, String code) throws MessageException;
+    Map<String,Object> getInfoByCode(String sessionId, String code) throws MessageException;
 
     UserBean isLogin(String sessionId);
 

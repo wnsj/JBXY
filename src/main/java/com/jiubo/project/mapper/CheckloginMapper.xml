@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiubo.project.dao.CheckloginDao">
+
+    <select id="departmentFind" resultType="com.jiubo.project.bean.CheckloginBean">
+        <if test="id == null">
+            select * from `checklogin` c
+            where c.deparsmallid is NULL
+            order by c.other
+        </if>
+        <if test="id != null">
+            select c1.*
+            from `checklogin` c1
+            LEFT join  `checklogin` c2
+            on c1.deparsmallid = c2.id
+            where c2.id = #{id}
+        </if>
+    </select>
+
+</mapper>

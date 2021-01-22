@@ -71,7 +71,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserBean> implements U
     }
 
     @Override
-    public Integer getInfoByCode(String sessionId, String code) throws MessageException {
+    public Map<String,Object> getInfoByCode(String sessionId, String code) throws MessageException {
+        Map<String,Object> map = new HashMap<>();
         StringBuilder builder = new StringBuilder("https://api.weixin.qq.com/sns/oauth2/access_token?");
         builder.append("appid=").append(appid);
         builder.append("&secret=").append(appSecret);
@@ -84,17 +85,20 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserBean> implements U
         if(StringUtils.isEmpty(openId)){
             throw new MessageException("通过code去微信查询openid异常");
         }
+        map.put("openId",openId);
         QueryWrapper<UserBean> qw = new QueryWrapper<>();
         qw.eq("openid",openId);
         List<UserBean> list = userDao.selectList(qw);
         //0代表没有查到1代表数据库存在此openid数据
         if(CollectionUtils.isEmpty(list)){
-            return 0;
+            map.put("state",0);
+            return map;
         }
         UserBean userBean = list.get(0);
         userBean.setSessionid(sessionId);
         userDao.updateById(userBean);
-        return 1;
+        map.put("state",1);
+        return map;
     }
 
     @Override
