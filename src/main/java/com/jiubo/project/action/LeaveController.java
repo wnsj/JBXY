@@ -6,11 +6,11 @@ import com.jiubo.project.bean.LeaveBean;
 import com.jiubo.project.common.Constant;
 import com.jiubo.project.exception.MessageException;
 import com.jiubo.project.service.LeaveService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
  * @author
  * @since 2021-01-21
  */
+@Api(tags = "目录结构")
 @RestController
 @RequestMapping("/leaveBean")
 public class LeaveController {

@@ -14,15 +14,14 @@ import com.jiubo.project.dao.UserDao;
 import com.jiubo.project.exception.MessageException;
 import com.jiubo.project.service.ClassInforService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -66,8 +65,8 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
     @Override
     public Map<String, Object> checkedVideo(Integer id, String classPwd, String openid) throws MessageException {
         if(id == null) throw new MessageException("课程ID不可为空！");
-        if (classPwd == null && classPwd.equals("")) throw new MessageException("观看视频密码不可为空！");
-        if (openid == null && openid.equals("")) throw new MessageException("用微信登录码不可为空！");
+        if (StringUtils.isBlank(classPwd)) throw new MessageException("观看视频密码不可为空！");
+        if (StringUtils.isBlank(openid)) throw new MessageException("用微信登录码不可为空！");
         ClassInforBean classInforBean = classInforDao.selectById(id);
         QueryWrapper<UserBean> isUser = new QueryWrapper<>();
         isUser.eq("openid",openid);
@@ -75,8 +74,9 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         if (userBean == null) throw new MessageException("数据库没有查询到相应的用户！");
         //查询密码
         QueryWrapper<PasswordBean> passwordBean= new QueryWrapper<>();
-        passwordBean.eq("classid",id).eq("classPwd",classPwd);
+        passwordBean.eq("classid",id).eq("password",classPwd);
         List<PasswordBean> passwordBeans = passwordDao.selectList(passwordBean);
+        if (CollectionUtils.isEmpty(passwordBeans)) throw new MessageException("未查询到相关课程数据");
         if (passwordBeans.size() > 1) throw new MessageException("数据出现重复数据!");
         PasswordBean password = passwordBeans.get(0);
         //判断视频的观看次数
@@ -103,6 +103,7 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         } else {
             LectureScheduleBean lectureSchedule = new LectureScheduleBean();
             lectureSchedule.setUser(userBean.getName())
+                    .setUserId(userBean.getId())
                     .setClassName(String.valueOf(id))
                     .setTime(LocalDateTime.now())
                     .setDeparment(userBean.getDepartment())

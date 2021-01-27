@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.liangbaika.validate.annations.ValidateParam;
 import com.github.liangbaika.validate.annations.ValidateParams;
 import com.github.liangbaika.validate.enums.Check;
-import com.google.common.base.Utf8;
 import com.jiubo.project.bean.UserBean;
 import com.jiubo.project.common.Constant;
 import com.jiubo.project.service.UserService;
@@ -17,10 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * <p>

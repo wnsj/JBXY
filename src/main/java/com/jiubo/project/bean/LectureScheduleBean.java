@@ -51,7 +51,10 @@ public class LectureScheduleBean implements Serializable {
     @ApiModelProperty(value = "听完课的时间")
     private LocalTime listenTime;
 
+    @ApiModelProperty(value = "听完课的日期")
     private LocalDate listenDate;
 
+    @ApiModelProperty(value = "用户id")
+    private Integer userId;
 
 }

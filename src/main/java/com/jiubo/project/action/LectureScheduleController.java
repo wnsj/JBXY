@@ -6,13 +6,13 @@ import com.jiubo.project.bean.LectureScheduleBean;
 import com.jiubo.project.common.Constant;
 import com.jiubo.project.exception.MessageException;
 import com.jiubo.project.service.LectureScheduleService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author swd
  * @since 2021-01-21
  */
+@Api(tags = "观看记录")
 @RestController
 @RequestMapping("/lectureScheduleBean")
 public class LectureScheduleController {
@@ -41,7 +42,7 @@ public class LectureScheduleController {
     @PostMapping("/updateLectureScheduleBean")
     public JSONObject updateLectureScheduleBean(@RequestBody LectureScheduleBean lectureScheduleBean) throws MessageException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constant.Result.RETCODE,Constant.Result.RETCODE);
+        jsonObject.put(Constant.Result.RETCODE,Constant.Result.SUCCESS);
         jsonObject.put(Constant.Result.RETMSG,Constant.Result.RETMSG);
         if(lectureScheduleBean.getId() == null) throw new MessageException("观看视频记录的ID不可为空");
         lectureScheduleService.updateById(lectureScheduleBean);

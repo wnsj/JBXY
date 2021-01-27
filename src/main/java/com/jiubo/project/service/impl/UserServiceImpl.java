@@ -8,7 +8,6 @@ import com.jiubo.project.exception.MessageException;
 import com.jiubo.project.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jiubo.project.util.DateUtils;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

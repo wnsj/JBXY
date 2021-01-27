@@ -73,7 +73,7 @@ public class ClassInforController {
             @ApiImplicitParam(name = "openid", value = "微信登录生成码",required = true,dataType = "String", paramType = "query")})
     public JSONObject checkedVideo(@RequestParam Integer id,@RequestParam String classPwd,@RequestParam String openid) throws MessageException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constant.Result.RETCODE,Constant.Result.RETCODE);
+        jsonObject.put(Constant.Result.RETCODE,Constant.Result.SUCCESS);
         jsonObject.put(Constant.Result.RETMSG,Constant.Result.RETMSG);
         jsonObject.put(Constant.Result.RETDATA,classInforService.checkedVideo(id,classPwd,openid));
         return jsonObject;
