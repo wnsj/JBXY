@@ -72,11 +72,16 @@ public class ClassInforServiceImpl extends ServiceImpl<ClassInforDao, ClassInfor
         isUser.eq("openid",openid);
         UserBean userBean = userDao.selectOne(isUser);
         if (userBean == null) throw new MessageException("数据库没有查询到相应的用户！");
-        //查询密码
+        //查询课程是否存在
         QueryWrapper<PasswordBean> passwordBean= new QueryWrapper<>();
+        passwordBean.eq("classid",id);
+        List<PasswordBean> list = passwordDao.selectList(passwordBean);
+        if (CollectionUtils.isEmpty(list)) throw new MessageException("未查询到相关课程数据");
+        //查询密码
+        passwordBean =  new QueryWrapper<>();
         passwordBean.eq("classid",id).eq("password",classPwd);
         List<PasswordBean> passwordBeans = passwordDao.selectList(passwordBean);
-        if (CollectionUtils.isEmpty(passwordBeans)) throw new MessageException("未查询到相关课程数据");
+        if (CollectionUtils.isEmpty(passwordBeans)) throw new MessageException("密码不正确");
         if (passwordBeans.size() > 1) throw new MessageException("数据出现重复数据!");
         PasswordBean password = passwordBeans.get(0);
         //判断视频的观看次数
